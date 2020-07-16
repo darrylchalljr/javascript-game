@@ -9,21 +9,31 @@ console.log("Welcome to the arena!!!");
 setTimeout(
     () => {
         console.clear();
-        console.log("Choose your character!");
+        console.log("Choose your fighter!");
+
+// Displays the names of the characters in the testCharacters Array.
+        let numOfCharacters = testCharacters.length;
+        for(i = 0; i < numOfCharacters; i += 1){
+            console.log(testCharacters[i].name);
+        }
+        console.log("\n"); //adds a line break after the list of fighters.
+//Gives the user the ability to type the name of the fighter they choose.
+        let myCharacter = readlineSync.question("Fighter?: ")
     }, 
     3000
     );
     
-let testCharacters = [
-    {name: "John", description:"This is a sentence."},
-    {name: "Darryl", description:"This is a sentence."},
-    {name: "Daniel", description:"This is a sentence."}
-]
+    let testCharacters = [
+        {name: "John", description:"This is a sentence."},
+        {name: "Darryl", description:"This is a sentence."},
+        {name: "Daniel", description:"This is a sentence."}
+    ]
+    
+    //create a pool of fighters that are available
 
 
 //Get matched against another fighter
 
-//create a pool of fighters that are available
 
 // start a fight with a cpu fighter
 
