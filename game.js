@@ -35,6 +35,7 @@ class Fighter {
 let rufus = new Fighter("Rufus","A description of Rufus",100,rufusSpecial);
 let billy = new Fighter("Billy","This is billy.",100)
 let availableFighters = [rufus,billy];
+let validatedChar;
 //Get matched against another fighter
 
 // start a fight with a cpu fighter
@@ -62,7 +63,28 @@ setTimeout(
         }
         console.log("\n"); //adds a line break after the list of fighters.
 //Gives the user the ability to type the name of the fighter they choose.
-        let myCharacter = readlineSync.question("Fighter?: ")
+        
+        
+        function validateCharacter () {
+            function getCharacter (){
+                unvalidatedChar = readlineSync.question("Fighter?: ")
+            }        
+            getCharacter();
+    
+            if (
+                availableFighters.find(
+                    (element) => {
+                        return (unvalidatedChar === element.name)
+                    }
+                )
+            ){
+                validatedChar = unvalidatedChar;
+            } else {
+                console.log("Please choose again!");
+                validateCharacter();
+            }            
+        }
+        validateCharacter();
     }, 
-    3000
-    );
+    1000
+);
