@@ -62,9 +62,9 @@ setTimeout(
             console.log(availableFighters[i].name);
         }
         console.log("\n"); //adds a line break after the list of fighters.
+        
+        
 //Gives the user the ability to type the name of the fighter they choose.
-        
-        
         function validateCharacter () {
             function getCharacter (){
                 unvalidatedChar = readlineSync.question("Fighter?: ")
@@ -81,10 +81,11 @@ setTimeout(
                 validatedChar = unvalidatedChar;
             } else {
                 console.log("Please choose again!");
-                validateCharacter();
-            }            
+                validateCharacter()
+            }
+            return validatedChar            
         }
         validateCharacter();
-    }, 
+},
     1000
 );
