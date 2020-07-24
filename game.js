@@ -54,7 +54,7 @@ let validatedChar;
 //Character Selection
 console.clear();
 
-console.log("Welcome to the arena!!!");
+// console.log("Welcome to the arena!!!");
 
 // This is to delay the second message the user sees after joining the game.
 // setTimeout(
@@ -99,7 +99,7 @@ console.log("Welcome to the arena!!!");
 
 
 //Start a fight with a cpu fighter
-testFight(rufus,billy);
+/* testFight(rufus,billy);
 
 function testFight (validateCharacter, cpuOpponent) {
     setTimeout (
@@ -121,7 +121,16 @@ function testFight (validateCharacter, cpuOpponent) {
     console.log("1");
     // console.clear();
 }
-
+ */
 // Idea to solve recurring setTimeout problem in section above, use with a .forEach or .map loop
-let x = [console.clear(),console.log("test string")];
-console.log(x);
+
+let x = [()=>{console.log("test 1")},()=>{console.clear()},()=>{console.log("test 2")},()=>{console.log("test 3")}];
+
+x.forEach(
+    (element,index) => {
+        setTimeout(
+            (z) => {z()},
+            1500*index,
+            element)
+    }
+)
