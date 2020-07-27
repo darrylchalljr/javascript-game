@@ -99,38 +99,42 @@ console.clear();
 
 
 //Start a fight with a cpu fighter
-/* testFight(rufus,billy);
+testFight(rufus,billy);
 
 function testFight (validateCharacter, cpuOpponent) {
+
+    // Component definitions
+    const fightDelay = 1500;
+
+    function printMoves (playerCharacter) {
+        console.log(playerCharacter.moves);
+    }
+
+    let delayPrint = [
+        // ()=>{console.clear()},
+        ()=>{console.log(`${validateCharacter.name} enters the ring!`)},
+        // ()=>{console.clear()},
+        ()=>{console.log(`${cpuOpponent.name} enters the ring!`)},
+        ()=>{console.log("Get ready to fight!!!")},
+        ()=>{console.log("3")},
+        ()=>{console.log("2")},
+        ()=>{console.log("1")}
+    ];
+
+    // Code execution
+    delayPrint.forEach(
+        (element,index) => {
+            setTimeout(
+                (elementPlaceholder) => {elementPlaceholder()},
+                fightDelay*index,
+                element)
+        }
+    )
     setTimeout (
-        () => {console.clear()},
-        1000
-    );
-    setTimeout (
-        () => {console.log(`${validateCharacter.name} enters the ring!`)},
-        2000
-    );
-    setTimeout (
-        () => {console.log(`${cpuOpponent.name} enters the ring!`)},
-        3000
-    );
-    console.log("Get ready to fight!");
-    // console.clear();
-    console.log("3");
-    console.log("2");
-    console.log("1");
-    // console.clear();
+        () => {console.log("This is my string.")},
+        fightDelay*(delayPrint.length+1)
+    )
+    // printMoves(validateCharacter);
 }
- */
 // Idea to solve recurring setTimeout problem in section above, use with a .forEach or .map loop
 
-let x = [()=>{console.log("test 1")},()=>{console.clear()},()=>{console.log("test 2")},()=>{console.log("test 3")}];
-
-x.forEach(
-    (element,index) => {
-        setTimeout(
-            (z) => {z()},
-            1500*index,
-            element)
-    }
-)
