@@ -1,7 +1,7 @@
 /* Todos:
 1: Rename testFight to proper name
 2: Ensure figher selection gets passed into starting match correctly
-3: 
+3: Validate user entry for move selection
 */
 
 
@@ -105,12 +105,33 @@ function testFight (validateCharacter, cpuOpponent) {
 
     // Component definitions
     const fightDelay = 1500;
+    let userMove;
 
-    function printMoves (playerCharacter) {
-        console.log(playerCharacter.moves);
+    function delayPrintMatchStart (printableFunctionsArray) {
+        printableFunctionsArray.forEach(
+            (element,index) => {
+                setTimeout(
+                    (elementPlaceholder) => {elementPlaceholder()},
+                    fightDelay*index,
+                    element)
+            }
+        )
     }
 
-    let delayPrint = [
+    function printMoves (playerCharacter) {
+        playerCharacter.moves.forEach(
+            (element,index,array) => {
+                if (element.coolDown == 0) {
+                    console.log(`(${index+1}) ${element.name}`)
+                }
+                else {
+                    console.log(`(${index+1}) ${element.name}    CoolDown Time: ${element.coolDown} -- Fix this value so it decrements`)
+                }
+            }
+        )
+    }
+
+    let thingsToPrint = [
         // ()=>{console.clear()},
         ()=>{console.log(`${validateCharacter.name} enters the ring!`)},
         // ()=>{console.clear()},
@@ -122,17 +143,16 @@ function testFight (validateCharacter, cpuOpponent) {
     ];
 
     // Code execution
-    delayPrint.forEach(
-        (element,index) => {
-            setTimeout(
-                (elementPlaceholder) => {elementPlaceholder()},
-                fightDelay*index,
-                element)
-        }
-    )
+    delayPrintMatchStart(thingsToPrint);
+ 
     setTimeout (
-        () => {console.log("This is my string.")},
-        fightDelay*(delayPrint.length+1)
+        () => {
+            console.log("Choose your move: ");
+            printMoves(validateCharacter);
+            userMove = readlineSync.question("");
+            console.log(userMove);
+        },
+        fightDelay*(thingsToPrint.length+1)
     )
     // printMoves(validateCharacter);
 }
