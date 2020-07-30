@@ -1,7 +1,6 @@
 /* Todos:
 1: Rename testFight to proper name
 2: Ensure figher selection gets passed into starting match correctly
-3: Validate user entry for move selection
 */
 
 
@@ -101,11 +100,12 @@ console.clear();
 //Start a fight with a cpu fighter
 testFight(rufus,billy);
 
-function testFight (validateCharacter, cpuOpponent) {
+function testFight (validatedCharacter, cpuOpponent) {
 
     // Component definitions
-    const fightDelay = 1500;
+    const fightDelay = 500;
     let userMove;
+    let cpuOpponentMove;
 
     function delayPrintMatchStart (printableFunctionsArray) {
         printableFunctionsArray.forEach(
@@ -131,9 +131,28 @@ function testFight (validateCharacter, cpuOpponent) {
         )
     }
 
+    function validateMoveEntry (entry) {
+        if (
+            (entry < 1) 
+            || 
+            (entry > validatedCharacter.moves.length)
+        ){
+            console.log("Invalid entry. Pick a new move!");
+            entry = readlineSync.question("")
+            validateMoveEntry(entry);
+        }
+    };
+
+    function chooseCPUMove (cpuMovesArray) {
+        cpuOpponentMove = Math.floor(Math.random()*cpuMovesArray.length)+1;
+        console.log(cpuOpponentMove);
+        
+    };
+
+
     let thingsToPrint = [
         // ()=>{console.clear()},
-        ()=>{console.log(`${validateCharacter.name} enters the ring!`)},
+        ()=>{console.log(`${validatedCharacter.name} enters the ring!`)},
         // ()=>{console.clear()},
         ()=>{console.log(`${cpuOpponent.name} enters the ring!`)},
         ()=>{console.log("Get ready to fight!!!")},
@@ -144,17 +163,19 @@ function testFight (validateCharacter, cpuOpponent) {
 
     // Code execution
     delayPrintMatchStart(thingsToPrint);
- 
+
     setTimeout (
         () => {
             console.log("Choose your move: ");
-            printMoves(validateCharacter);
+            printMoves(validatedCharacter);
             userMove = readlineSync.question("");
-            console.log(userMove);
+            validateMoveEntry(userMove);
+            chooseCPUMove(cpuOpponent.moves);
         },
         fightDelay*(thingsToPrint.length+1)
     )
-    // printMoves(validateCharacter);
+
+    // printMoves(validatedCharacter);
 }
 // Idea to solve recurring setTimeout problem in section above, use with a .forEach or .map loop
 
