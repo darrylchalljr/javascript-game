@@ -1,6 +1,8 @@
 /* Todos:
 1: Rename testFight to proper name
 2: Ensure figher selection gets passed into starting match correctly
+3: Account for complexity with cooldowns.
+4: Make sure we have annotations for big chunks of code.
 */
 
 
@@ -38,7 +40,7 @@ class Fighter {
 }
 
 
-let rufus = new Fighter("Rufus","A description of Rufus",100,rufusSpecial);
+let rufus = new Fighter("Rufus","A description of Rufus",105,rufusSpecial);
 let billy = new Fighter("Billy","This is billy.",100)
 let availableFighters = [rufus,billy];
 let validatedChar;
@@ -106,6 +108,8 @@ function testFight (validatedCharacter, cpuOpponent) {
     const fightDelay = 500;
     let userMove;
     let cpuOpponentMove;
+    let currentPlayerHealth = validatedCharacter.hp;
+    let currentCPUHealth = cpuOpponent.hp;
 
     function delayPrintMatchStart (printableFunctionsArray) {
         printableFunctionsArray.forEach(
@@ -145,10 +149,19 @@ function testFight (validatedCharacter, cpuOpponent) {
 
     function chooseCPUMove (cpuMovesArray) {
         cpuOpponentMove = Math.floor(Math.random()*cpuMovesArray.length)+1;
-        console.log(cpuOpponentMove);
+        // console.log(cpuOpponentMove);
         
     };
 
+    function calcAndDisplayDamage(chosenPlayerMove,generatedCPUmove) {
+        // Calculates the value of damage.
+        currentPlayerHealth -= cpuOpponent.moves[generatedCPUmove - 1].damage;
+        currentCPUHealth -= validatedCharacter.moves[chosenPlayerMove - 1].damage;
+        // Prints the damage done to both fighters.
+        console.log(`${cpuOpponent.name} hits ${validatedCharacter.name} with a ${cpuOpponent.moves[generatedCPUmove - 1].name} for ${cpuOpponent.moves[generatedCPUmove - 1].damage} damage.`
+        );
+        console.log(`${validatedCharacter.name} hits ${cpuOpponent.name} with a ${validatedCharacter.moves[chosenPlayerMove - 1].name} for ${validatedCharacter.moves[chosenPlayerMove - 1].damage} damage.`);
+    };
 
     let thingsToPrint = [
         // ()=>{console.clear()},
@@ -171,6 +184,7 @@ function testFight (validatedCharacter, cpuOpponent) {
             userMove = readlineSync.question("");
             validateMoveEntry(userMove);
             chooseCPUMove(cpuOpponent.moves);
+            calcAndDisplayDamage(userMove,cpuOpponentMove);
         },
         fightDelay*(thingsToPrint.length+1)
     )
