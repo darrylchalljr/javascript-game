@@ -9,8 +9,6 @@
 // readlineSync Dependency - https://www.npmjs.com/package/readline-sync
 const readlineSync = require('readline-sync');
 
-
-//create a pool of fighters that are available
 class Attack {
     constructor(name,type,damage,coolDown){
         this.name = name;
@@ -18,42 +16,42 @@ class Attack {
         this.damage = damage;
         this.coolDown = coolDown;
     }
+    
 }
-
-
-// Common moves:
-const jab = new Attack("Jab","Punch",10,0);
-const lowKick = new Attack("Low Kick","Kick",12.5,0);
-const highKick = new Attack("High Kick","Kick",15,1);
-
-
-// Fighter-specific moves:
-const rufusSpecial = new Attack("Gut Punch", "Special",25,2);
 
 class Fighter {
     constructor(name,description,hp,...attacks){
         this.name = name;
         this.description = description;
         this.hp = hp;
-        this.moves = [jab,lowKick,highKick].concat(attacks);
+        this.moves = commonMoves.concat(attacks);
     }
 }
 
+// Fighter-specific moves:
+const rufusSpecial = new Attack("Gut Punch", "Special",25,2);
 
-let rufus = new Fighter("Rufus","A description of Rufus",105,rufusSpecial);
-let billy = new Fighter("Billy","This is billy.",100)
-let availableFighters = [rufus,billy];
-let validatedChar;
+// Common moves:
+const commonMoves = [],
+    availableFighters = [];
+function createCommonMove (name,type,damage,coolDown){
+    return commonMoves.push(new Attack(name,type,damage,coolDown));
+};
+createCommonMove("Jab","Punch",10,0);
+createCommonMove("Low Kick","Kick",12.5,0);
+createCommonMove("High Kick","Kick",15,1);
+
+// create a pool of fighters that are available
+function createFighter (name,description,hp,...attacks){
+    return availableFighters.push(new Fighter(name,description,hp,...attacks));
+};
+createFighter ("Rufus","A description of Rufus",105,rufusSpecial)
+createFighter ("Billy","This is billy.",100)
+let rufus = availableFighters[0],
+    billy = availableFighters[1],
+    validatedChar;
+
 //Get matched against another fighter
-
-// match resolution
-
-// game resolution if won all matches 
-
-// turn clock for opponents during the round
-
-//Character Selection
-console.clear();
 
 // console.log("Welcome to the arena!!!");
 
@@ -69,15 +67,14 @@ console.clear();
 //             console.log(availableFighters[i].name);
 //         }
 //         console.log("\n"); //adds a line break after the list of fighters.
-        
-        
+
 // //Gives the user the ability to type the name of the fighter they choose.
 //         function validateCharacter () {
 //             function getCharacter (){
 //                 unvalidatedChar = readlineSync.question("Fighter?: ")
 //             }        
 //             getCharacter();
-    
+
 //             if (
 //                 availableFighters.find(
 //                     (element) => {
@@ -148,10 +145,13 @@ function testFight (validatedCharacter, cpuOpponent) {
     };
 
     function chooseCPUMove (cpuMovesArray) {
+        if (cpuMovesArray.length < cpuMovesArray.length + 1){
         cpuOpponentMove = Math.floor(Math.random()*cpuMovesArray.length)+1;
+        }
+        else {cpuOpponentMove = Math.floor(Math.random()*cpuMovesArray.length);
+        }
+    }
         // console.log(cpuOpponentMove);
-        
-    };
 
     function calcAndDisplayDamage(chosenPlayerMove,generatedCPUmove) {
         // Calculates the value of damage.
