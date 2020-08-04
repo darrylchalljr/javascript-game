@@ -53,12 +53,9 @@ let rufus = availableFighters[0],
 
 //Print the names of fighters.
 function printFighterNames (fighterArray) {
-    let fighterNames = fighterArray.map(
-        function (fighter){
-            return fighter.name;
-        }
+    return fighterArray.forEach(
+        (fighter) => console.log(fighter.name)
     )
-    return fighterNames.forEach((name) => console.log(name));
 };
 
 /*
