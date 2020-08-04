@@ -51,49 +51,66 @@ let rufus = availableFighters[0],
     billy = availableFighters[1],
     validatedChar;
 
-//Get matched against another fighter
+//Print the names of fighters.
+function printFighterNames (fighterArray) {
+    let fighterNames = fighterArray.map(
+        function (fighter){
+            return fighter.name;
+        }
+    )
+    return fighterNames.forEach((name) => console.log(name));
+};
 
-// console.log("Welcome to the arena!!!");
+/*
+|---------------------------------------------------------------------|
+|                                                                     |
+|                           Start of the Game                         |
+|                                                                     |
+|---------------------------------------------------------------------|
+*/
+
+// Get matched against another fighter
+
+console.log("Welcome to the arena!!!");
 
 // This is to delay the second message the user sees after joining the game.
-// setTimeout(
-//     () => {
-//         console.clear();
-//         console.log("Choose your fighter!");
+setTimeout(
+    () => {
+        console.clear();
+        
+        console.log("Choose your fighter!");
 
+        // Displays the names of the fighters.
+        printFighterNames(availableFighters);
 
-// // Displays the names of the characters in the testCharacters Array.
-//         for(i = 0; i < availableFighters.length; i += 1){
-//             console.log(availableFighters[i].name);
-//         }
-//         console.log("\n"); //adds a line break after the list of fighters.
+        console.log("\n"); //adds a line break after the list of fighters.
 
-// //Gives the user the ability to type the name of the fighter they choose.
-//         function validateCharacter () {
-//             function getCharacter (){
-//                 unvalidatedChar = readlineSync.question("Fighter?: ")
-//             }        
-//             getCharacter();
+//Gives the user the ability to type the name of the fighter they choose.
+        function validateCharacter () {
+            function getCharacter (){
+                unvalidatedChar = readlineSync.question("Fighter?: ")
+            }        
+            getCharacter();
 
-//             if (
-//                 availableFighters.find(
-//                     (element) => {
-//                         return (unvalidatedChar === element.name)
-//                     }
-//                 )
-//             ){
-//                 validatedChar = unvalidatedChar;
-//             } else {
-//                 console.log("Please choose again!");
-//                 validateCharacter()
-//             }
-//             return validatedChar            
-//         }
-//         validateCharacter();
-//         testFight(rufus,billy);
-// },
-//     1000
-// );
+            if (
+                availableFighters.find(
+                    (element) => {
+                        return (unvalidatedChar === element.name)
+                    }
+                )
+            ){
+                validatedChar = unvalidatedChar;
+            } else {
+                console.log("Please choose again!");
+                validateCharacter()
+            }
+            return validatedChar            
+        }
+        validateCharacter();
+        testFight(rufus,billy);
+},
+    1000
+);
 
 
 //Start a fight with a cpu fighter
