@@ -232,4 +232,3 @@ function testFight (validatedCharacter, cpuOpponent) {
     // printMoves(validatedCharacter);
 }
 // Idea to solve recurring setTimeout problem in section above, use with a .forEach or .map loop
-
