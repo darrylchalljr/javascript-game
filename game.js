@@ -31,6 +31,7 @@ class Fighter {
 
 // Fighter-specific moves:
 const rufusSpecial = new Attack("Gut Punch", "Special",25,2);
+const marcusSpecial = new Attack("Upper Cut", "Special",25,2);
 
 // Common moves:
 const commonMoves = [],
@@ -49,8 +50,11 @@ function createFighter (name,description,hp,...attacks){
 };
 createFighter ("Rufus","A description of Rufus",100,rufusSpecial)
 createFighter ("Billy","This is billy.",100)
+createFighter ("Marcus","Marcus is an old school brawler.",100,marcusSpecial)
+
 let rufus = availableFighters[0],
     billy = availableFighters[1],
+    marcus = availableFighters[2],
     validatedChar;
 
 //Print the names of fighters.
@@ -71,50 +75,55 @@ function printFighterNames (fighterArray) {
 
 // Get matched against another fighter
 
-// console.log("Welcome to the arena!!!");
+console.log("Welcome to the arena!!!");
 
-// // This is to delay the second message the user sees after joining the game.
-// setTimeout(
-//     () => {
-//         console.clear();
+// This is to delay the second message the user sees after joining the game.
+setTimeout(
+    () => {
+        console.clear();
         
-//         console.log("Choose your fighter!");
+        console.log("Choose your fighter!");
 
-//         // Displays the names of the fighters.
-//         printFighterNames(availableFighters);
+        // Displays the names of the fighters.
+        printFighterNames(availableFighters);
 
-//         console.log("\n"); //adds a line break after the list of fighters.
+        console.log("\n"); //adds a line break after the list of fighters.
 
-// //Gives the user the ability to type the name of the fighter they choose.
-//         function validateCharacter () {
-//             function getCharacter (){
-//                 unvalidatedChar = readlineSync.question("Fighter?: ")
-//             }        
-//             getCharacter();
+//Gives the user the ability to type the name of the fighter they choose.
+        function validateCharacter () {
+            function getCharacter (){
+                unvalidatedChar = readlineSync.question("Fighter?: ")
+            }        
+            getCharacter();
 
-//             if (
-//                 availableFighters.find(
-//                     (element) => {
-//                         return (unvalidatedChar === element.name)
-//                     }
-//                 )
-//             ){
-//                 validatedChar = unvalidatedChar;
-//             } else {
-//                 console.log("Please choose again!");
-//                 validateCharacter()
-//             }
-//             return validatedChar            
-//         }
-//         validateCharacter();
-//         testFight(rufus,billy);
-// },
-//     1000
-// );
+            if (
+                availableFighters.find(
+                    (element) => {
+                        return (unvalidatedChar === element.name)
+                    }
+                )
+            ){
+                validatedChar = unvalidatedChar;
+            } else {
+                console.log("Please choose again!");
+                validateCharacter()
+            }
+            return validatedChar            
+        }
+        validateCharacter();
+        console.log(selectCPUopponent(availableFighters));
+        // testFight(rufus,billy);
+},
+    1000
+);
 
-
-//Start a fight with a cpu fighter
-testFight(rufus,billy);
+function selectCPUopponent (arrayOfFighters) {
+        if (arrayOfFighters.length >= 1) {
+            return arrayOfFighters[Math.floor(Math.random()*arrayOfFighters.length)];
+        } else {
+            console.log("You won!!!");
+        }
+};
 
 function testFight (validatedCharacter, cpuOpponent) {
 
@@ -229,6 +238,6 @@ function testFight (validatedCharacter, cpuOpponent) {
         fightDelay*(thingsToPrint.length+1)
     )
 
-    // printMoves(validatedCharacter);
+    printMoves(validatedCharacter);
 }
 // Idea to solve recurring setTimeout problem in section above, use with a .forEach or .map loop
