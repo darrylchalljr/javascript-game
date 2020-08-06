@@ -96,30 +96,35 @@ setTimeout(
             }        
             getCharacter();
 
+            /* 
+            Need to figure out how to assign 'validatedChar' the object of the found fighter. Tried forEach and a for loop. We got close but not quite.
             if (
-                availableFighters.find(
-                    (element) => {
-                        return (unvalidatedChar === element.name)
-                    }
-                )
-            ){
-                validatedChar = unvalidatedChar;
-            } else {
-                console.log("Please choose again!");
-                validateCharacter()
-            }
-            return validatedChar            
+    availableFighters.find(
+        (element) => {
+            return (unvalidatedChar === element.name)
+        }
+        )
+        ){
+            validatedChar = unvalidatedChar;
+            console.log(typeof(validatedChar));
+} else {
+    console.log("Please choose again!");
+    validateCharacter()
+}
+
+return validatedChar  
+            */
         }
         validateCharacter();
-        console.log(selectCPUopponent(availableFighters));
-        // testFight(rufus,billy);
+        selectCPUopponent(availableFighters);
+        testFight(validatedChar,cpuFighter);
 },
     1000
 );
-
+let cpuFighter;
 function selectCPUopponent (arrayOfFighters) {
         if (arrayOfFighters.length >= 1) {
-            return arrayOfFighters[Math.floor(Math.random()*arrayOfFighters.length)];
+            return cpuFighter = arrayOfFighters[Math.floor(Math.random()*arrayOfFighters.length)];
         } else {
             console.log("You won!!!");
         }
@@ -145,17 +150,19 @@ function testFight (validatedCharacter, cpuOpponent) {
         )
     }
 
-    function printMoves (playerCharacter) {
-        playerCharacter.moves.forEach(
-            (element,index,array) => {
-                if (element.coolDown == 0) {
-                    console.log(`(${index+1}) ${element.name}`)
-                }
-                else {
-                    console.log(`(${index+1}) ${element.name}    CoolDown Time: ${element.coolDown} -- Fix this value so it decrements`)
-                }
-            }
-        )
+    function printMoves (validatedCharacter) {
+        console.log(validatedCharacter.moves);
+        
+        // playerCharacter.moves.forEach(
+        //     (element,index,array) => {
+        //         if (element.coolDown == 0) {
+        //             console.log(`(${index+1}) ${element.name}`)
+        //         }
+        //         else {
+        //             console.log(`(${index+1}) ${element.name}    CoolDown Time: ${element.coolDown} -- Fix this value so it decrements`)
+        //         }
+        //     }
+        // )
     }
 
     function validateMoveEntry (entry) {
@@ -223,7 +230,7 @@ function testFight (validatedCharacter, cpuOpponent) {
         () => {
             do{
                 console.log("Choose your move: ");
-                printMoves(validatedCharacter);
+                printMoves(validatedChar);
                 userMove = readlineSync.question("");
                 validateMoveEntry(userMove);
                 chooseCPUMove(cpuOpponent.moves);
