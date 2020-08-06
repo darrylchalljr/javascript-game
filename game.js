@@ -1,9 +1,9 @@
-/* Todos:
-1: Rename testFight to proper name
-2: Ensure figher selection gets passed into starting match correctly
-3: Account for complexity with cooldowns.
-4: Make sure we have annotations for big chunks of code.
-5: Convert numbers to words for damage and health e.g. 1-10 = low, 11-20 = moderate, etc.
+/* 
+TODO: //// Rename testFight to proper name
+TODO: Account for complexity with cooldowns.
+TODO: Make sure we have annotations for big chunks of code.
+TODO: Convert numbers to words for damage and health e.g. 1-10 = low, 11-20 = moderate, etc.
+TODO: ////Ensure figher selection gets passed into starting match correctly~~
 */
 
 
@@ -66,11 +66,9 @@ function printFighterNames (fighterArray) {
 
 
 /*
-|---------------------------------------------------------------------|
-|                                                                     |
-|                           Start of the Game                         |
-|                                                                     |
-|---------------------------------------------------------------------|
+*|---------------------------------------------------------------------|
+*|                           Start of the Game                         |
+*|---------------------------------------------------------------------|
 */
 
 // Get matched against another fighter
@@ -89,38 +87,36 @@ setTimeout(
 
         console.log("\n"); //adds a line break after the list of fighters.
 
-//Gives the user the ability to type the name of the fighter they choose.
         function validateCharacter () {
+            //Gives the user the ability to type the name of the fighter they choose.
             function getCharacter (){
-                unvalidatedChar = readlineSync.question("Fighter?: ")
+                inputFighter = readlineSync.question("Fighter?: ")
             }        
             getCharacter();
-
-            /* 
-            Need to figure out how to assign 'validatedChar' the object of the found fighter. Tried forEach and a for loop. We got close but not quite.
-            if (
-    availableFighters.find(
-        (element) => {
-            return (unvalidatedChar === element.name)
+            
+            //Tests if the name the user input is a valid fighter.
+            let checkInputFighter = (element) => element.name === inputFighter;
+            // Assigns the fighter to validatedChar if valid, else repeats prompt.
+            function fighterAssigner (){
+                let fighterIndex = availableFighters.findIndex(checkInputFighter);
+                if (fighterIndex != -1){
+                    validatedChar = availableFighters[fighterIndex]
+                } else {
+                    console.log("Please choose again!");
+                    validateCharacter()
+                }
+            }
+            fighterAssigner ()        
         }
-        )
-        ){
-            validatedChar = unvalidatedChar;
-            console.log(typeof(validatedChar));
-} else {
-    console.log("Please choose again!");
-    validateCharacter()
-}
 
-return validatedChar  
-            */
-        }
+
         validateCharacter();
         selectCPUopponent(availableFighters);
         testFight(validatedChar,cpuFighter);
 },
     1000
 );
+
 let cpuFighter;
 function selectCPUopponent (arrayOfFighters) {
         if (arrayOfFighters.length >= 1) {
@@ -128,7 +124,8 @@ function selectCPUopponent (arrayOfFighters) {
         } else {
             console.log("You won!!!");
         }
-};
+}
+
 
 function testFight (validatedCharacter, cpuOpponent) {
 
@@ -136,7 +133,7 @@ function testFight (validatedCharacter, cpuOpponent) {
     const fightDelay = 500;
     let userMove;
     let cpuOpponentMove;
-    let currentPlayerHealth = validatedCharacter.hp;
+    let currentPlayerHealth = validatedChar.hp;
     let currentCPUHealth = cpuOpponent.hp;
 
     function delayPrintMatchStart (printableFunctionsArray) {
@@ -150,30 +147,29 @@ function testFight (validatedCharacter, cpuOpponent) {
         )
     }
 
-    function printMoves (validatedCharacter) {
-        console.log(validatedCharacter.moves);
+    function printMoves (fighter) {
         
-        // playerCharacter.moves.forEach(
-        //     (element,index,array) => {
-        //         if (element.coolDown == 0) {
-        //             console.log(`(${index+1}) ${element.name}`)
-        //         }
-        //         else {
-        //             console.log(`(${index+1}) ${element.name}    CoolDown Time: ${element.coolDown} -- Fix this value so it decrements`)
-        //         }
-        //     }
-        // )
+        fighter.moves.forEach(
+            (element,index) => {
+                if (element.coolDown == 0) {
+                    console.log(`(${index+1}) ${element.name}`)
+                }
+                else {
+                    console.log(`(${index+1}) ${element.name}    CoolDown Time: ${element.coolDown} -- Fix this value so it decrements`)
+                }
+            }
+        )
     }
 
-    function validateMoveEntry (entry) {
+    function validateMoveEntry (moveNumber) {
         if (
-            (entry < 1) 
+            (moveNumber < 1) 
             || 
-            (entry > validatedCharacter.moves.length)
+            (moveNumber > validatedChar.moves.length)
         ){
             console.log("Invalid entry. Pick a new move!");
-            entry = readlineSync.question("")
-            validateMoveEntry(entry);
+            moveNumber = readlineSync.question("")
+            validateMoveEntry(moveNumber);
         }
     };
 
@@ -244,7 +240,5 @@ function testFight (validatedCharacter, cpuOpponent) {
         },
         fightDelay*(thingsToPrint.length+1)
     )
-
-    printMoves(validatedCharacter);
 }
 // Idea to solve recurring setTimeout problem in section above, use with a .forEach or .map loop
