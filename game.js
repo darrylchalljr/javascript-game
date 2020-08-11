@@ -1,6 +1,7 @@
 /* 
 TODO: //// Rename testFight to proper name
 TODO: Account for complexity with cooldowns.
+TODO: Match against next available fighter.
 TODO: Make sure we have annotations for big chunks of code.
 TODO: Convert numbers to words for damage and health e.g. 1-10 = low, 11-20 = moderate, etc.
 TODO: ////Ensure figher selection gets passed into starting match correctly~~
@@ -135,6 +136,20 @@ function testFight (validatedCharacter, cpuOpponent) {
     let cpuOpponentMove;
     let currentPlayerHealth = validatedChar.hp;
     let currentCPUHealth = cpuOpponent.hp;
+    let currentPlayerMoves = JSON.parse(JSON.stringify(validatedChar.moves));
+    
+    
+    // Setting cool down values to zero for the beginning of the fight.
+        currentPlayerMoves.forEach(
+                (element, index, array) => {
+                    element.coolDown = 0;
+                }
+            )
+    console.log(currentPlayerMoves)
+    console.log(validatedChar.moves)
+    // track and print moves and cooldowns
+    // track how many turns have elapsed
+    // only allow user to pick move that has cooled down
 
     function delayPrintMatchStart (printableFunctionsArray) {
         printableFunctionsArray.forEach(
